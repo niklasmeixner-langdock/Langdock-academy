@@ -50,8 +50,8 @@ export function LessonView({
 
   return (
     <div className="h-full flex">
-      {/* Content panel — fixed width */}
-      <div className={`${iframeCollapsed ? "flex-1" : "w-[480px] shrink-0"} min-w-0 border-r border-gray-200 flex flex-col h-full`}>
+      {/* Content panel — flexible */}
+      <div className="flex-1 min-w-0 border-r border-gray-200 flex flex-col h-full">
         <div className="px-6 py-3 border-b border-gray-200 text-xs text-gray-500">
           {breadcrumbs.map((crumb, i) => (
             <span key={crumb.href}>
@@ -93,7 +93,7 @@ export function LessonView({
 
       {/* Workspace panel — fixed width, doesn't grow */}
       {!iframeCollapsed && (
-        <div className="flex-1 min-w-0">
+        <div className="w-[55vw] shrink-0">
           <WorkspaceIframe
             workspaceId={workspaceId}
             baseUrl={langdockBaseUrl}
