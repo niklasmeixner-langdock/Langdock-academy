@@ -44,7 +44,7 @@ export default async function LessonPage({
       mdxContent={mdxContent}
       completedTaskIds={completedTaskIds}
       workspaceId={user?.workspaceId ?? ""}
-      langdockBaseUrl={process.env.NEXT_PUBLIC_LANGDOCK_APP_URL || "http://localhost:3001"}
+      langdockBaseUrl="/api/workspace-proxy"
       breadcrumbs={[
         { label: category.title, href: `/${categorySlug}` },
         { label: course.title, href: `/${categorySlug}/${courseSlug}` },
