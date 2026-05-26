@@ -50,12 +50,8 @@ export function LessonView({
 
   return (
     <div className="h-full flex">
-      {/* Content panel — expands when iframe is collapsed */}
-      <div
-        className={`${
-          iframeCollapsed ? "flex-1" : "w-[500px] shrink-0"
-        } border-r border-gray-200 flex flex-col h-full`}
-      >
+      {/* Content panel — always gets extra space */}
+      <div className="flex-1 min-w-0 border-r border-gray-200 flex flex-col h-full">
         <div className="px-6 py-3 border-b border-gray-200 text-xs text-gray-500">
           {breadcrumbs.map((crumb, i) => (
             <span key={crumb.href}>
@@ -68,7 +64,7 @@ export function LessonView({
         </div>
 
         <div className="flex-1 overflow-y-auto">
-          <div className={`prose ${iframeCollapsed ? "prose-base max-w-3xl mx-auto" : "prose-sm max-w-none"} p-6`}>
+          <div className="prose prose-sm max-w-2xl p-6">
             {mdxContent}
           </div>
         </div>
@@ -95,16 +91,27 @@ export function LessonView({
         )}
       </div>
 
-      {/* Workspace panel */}
-      <div className={iframeCollapsed ? "" : "flex-1 min-w-0"}>
+      {/* Workspace panel — fixed width, doesn't grow */}
+      {!iframeCollapsed && (
+        <div className="w-[600px] max-w-[50vw] shrink-0">
+          <WorkspaceIframe
+            workspaceId={workspaceId}
+            baseUrl={langdockBaseUrl}
+            path={iframePath}
+            collapsed={false}
+            onToggleCollapse={() => setIframeCollapsed(true)}
+          />
+        </div>
+      )}
+      {iframeCollapsed && (
         <WorkspaceIframe
           workspaceId={workspaceId}
           baseUrl={langdockBaseUrl}
           path={iframePath}
-          collapsed={iframeCollapsed}
-          onToggleCollapse={() => setIframeCollapsed((c) => !c)}
+          collapsed={true}
+          onToggleCollapse={() => setIframeCollapsed(false)}
         />
-      </div>
+      )}
     </div>
   );
 }
