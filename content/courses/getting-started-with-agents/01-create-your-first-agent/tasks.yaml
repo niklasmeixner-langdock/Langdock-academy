@@ -1,0 +1,19 @@
+tasks:
+  - id: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+    title: "Create a new agent"
+    description: "Create at least one agent in your Langdock workspace."
+    order: 1
+    iframeHint: "/agents"
+    verification:
+      type: "agent-exists"
+      params:
+        minCount: 1
+
+  - id: "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+    title: "Add a knowledge folder"
+    description: "Add a knowledge folder to your agent so it can reference your documents."
+    order: 2
+    verification:
+      type: "knowledge-folder-exists"
+      params:
+        minCount: 1

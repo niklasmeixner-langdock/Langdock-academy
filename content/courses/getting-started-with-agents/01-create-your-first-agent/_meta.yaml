@@ -1,0 +1,6 @@
+slug: create-your-first-agent
+title: Create Your First Agent
+description: Learn how to create and name an AI agent in Langdock.
+order: 1
+courseSlug: getting-started-with-agents
+iframeStartPath: /agents
