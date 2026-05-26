@@ -1,6 +1,6 @@
 # ── Stage 1: Install dependencies ─────────────────────────────────────
 FROM node:20-alpine AS deps
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN npm install -g pnpm@10
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
@@ -8,13 +8,12 @@ RUN pnpm install --frozen-lockfile
 
 # ── Stage 2: Build the application ───────────────────────────────────
 FROM node:20-alpine AS builder
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN npm install -g pnpm@10
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Generate Prisma client and build Next.js
 RUN npx prisma generate
 RUN pnpm build
 
@@ -29,17 +28,10 @@ ENV HOSTNAME="0.0.0.0"
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy public assets
 COPY --from=builder /app/public ./public
-
-# Copy content directory (loaded at runtime via fs)
 COPY --from=builder /app/content ./content
-
-# Copy standalone output
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-# Copy prisma schema (needed if running migrations at startup)
 COPY --from=builder /app/prisma ./prisma
 
 USER nextjs
