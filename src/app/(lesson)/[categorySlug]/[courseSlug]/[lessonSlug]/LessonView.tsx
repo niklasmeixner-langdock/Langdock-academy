@@ -64,7 +64,7 @@ export function LessonView({
         </div>
 
         <div className="flex-1 overflow-y-auto">
-          <div className="prose prose-sm max-w-2xl p-6">
+          <div className="prose prose-sm max-w-2xl mx-auto p-6">
             {mdxContent}
           </div>
         </div>
