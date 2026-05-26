@@ -43,33 +43,15 @@ export function Sidebar({ categories, courses, completedTaskIds }: SidebarProps)
 
   if (collapsed) {
     return (
-      <nav className="w-12 shrink-0 h-full border-r border-gray-200 bg-gray-50 flex flex-col items-center pt-3 gap-1">
+      <div className="h-full border-r border-gray-200 bg-gray-50 flex flex-col items-center pt-3 px-1">
         <button
           onClick={() => setCollapsed(false)}
-          className="p-2 text-gray-400 hover:text-gray-700 transition-colors mb-2"
+          className="p-1.5 text-gray-400 hover:text-gray-700 transition-colors"
           title="Expand sidebar"
         >
           <PanelLeftOpen className="w-4 h-4" />
         </button>
-        {categories.map((category) => {
-          const Icon = iconMap[category.icon] ?? BookOpen;
-          const isActive = pathname.startsWith(`/${category.slug}`);
-          return (
-            <Link
-              key={category.slug}
-              href={`/${category.slug}`}
-              className={`p-2 rounded transition-colors ${
-                isActive
-                  ? "bg-blue-100 text-blue-700"
-                  : "text-gray-400 hover:text-gray-700 hover:bg-gray-200"
-              }`}
-              title={category.title}
-            >
-              <Icon className="w-4 h-4" />
-            </Link>
-          );
-        })}
-      </nav>
+      </div>
     );
   }
 
