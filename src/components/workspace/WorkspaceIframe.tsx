@@ -2,8 +2,6 @@
 
 import { useState, useRef } from "react";
 import {
-  Loader2,
-  AlertCircle,
   ExternalLink,
   RefreshCw,
   PanelRightClose,
@@ -19,22 +17,15 @@ interface WorkspaceIframeProps {
 }
 
 export function WorkspaceIframe({
-  workspaceId,
   baseUrl,
   path = "/",
   collapsed = false,
   onToggleCollapse,
 }: WorkspaceIframeProps) {
-  const [loading, setLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const iframeUrl = `${baseUrl}${path}`;
-
-  function handleRefresh() {
-    setLoading(true);
-    setRefreshKey((k) => k + 1);
-  }
 
   if (collapsed) {
     return (
@@ -52,11 +43,10 @@ export function WorkspaceIframe({
 
   return (
     <div className="h-full flex flex-col">
-      {/* Toolbar */}
       <div className="flex items-center justify-between px-2 py-1.5 bg-gray-100 border-b border-gray-200 shrink-0">
         <div className="flex items-center gap-0.5">
           <button
-            onClick={handleRefresh}
+            onClick={() => setRefreshKey((k) => k + 1)}
             className="p-1.5 text-gray-400 hover:text-gray-700 rounded transition-colors"
             title="Refresh"
           >
@@ -86,25 +76,13 @@ export function WorkspaceIframe({
         )}
       </div>
 
-      {/* Iframe */}
-      <div className="flex-1 relative">
-        {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-50 z-10">
-            <div className="text-center">
-              <Loader2 className="w-8 h-8 text-blue-600 animate-spin mx-auto mb-3" />
-              <p className="text-sm text-gray-500">Loading workspace...</p>
-            </div>
-          </div>
-        )}
-        <iframe
-          key={refreshKey}
-          ref={iframeRef}
-          src={iframeUrl}
-          className="w-full h-full border-0"
-          allow="clipboard-write"
-          onLoad={() => setLoading(false)}
-        />
-      </div>
+      <iframe
+        key={refreshKey}
+        ref={iframeRef}
+        src={iframeUrl}
+        className="flex-1 w-full border-0"
+        allow="clipboard-write"
+      />
     </div>
   );
 }
