@@ -44,7 +44,7 @@ export default async function LessonPage({
       mdxContent={mdxContent}
       completedTaskIds={completedTaskIds}
       workspaceId={user?.workspaceId ?? ""}
-      langdockBaseUrl={process.env.NEXT_PUBLIC_LANGDOCK_APP_URL || "https://app.langdock.com"}
+      langdockBaseUrl={process.env.NEXT_PUBLIC_LANGDOCK_APP_URL || "/langdock"}
       breadcrumbs={[
         { label: category.title, href: `/${categorySlug}` },
         { label: course.title, href: `/${categorySlug}/${courseSlug}` },
